@@ -46,8 +46,8 @@ As informações são exibidas em um **display OLED SSD1306** e há sinais visua
 
 1. Clone este repositório:  
    ```bash
-   git clone https://github.com/seu-usuario/Projeto_AHT10.git
-   cd Projeto_AHT10
+   git clone https://github.com/ThalesFortes/Temperature-and-Humidity-Monitoring.git
+   cd Temperature-and-Humidity-Monitoring
 
 Configure o ambiente do Pico SDK no seu computador.
 

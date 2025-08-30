@@ -7,16 +7,13 @@
 // Endereço padrão do AHT10
 #define AHT10_I2C_ADDR 0x38
 
-// Estrutura de dados do sensor
 typedef struct {
     float temp_celsius;
     float umidade_relativa;
 } AHT10_t;
 
-// Inicialização do sensor
 bool AHT10_inicializar(i2c_inst_t *i2c);
 
-// Leitura de dados (temperatura + umidade)
 bool AHT10_obterMedicao(i2c_inst_t *i2c, AHT10_t *medida);
 
 #endif

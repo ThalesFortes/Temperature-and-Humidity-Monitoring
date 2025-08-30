@@ -8,7 +8,7 @@ bool AHT10_inicializar(i2c_inst_t *i2c) {
     int resultado = i2c_write_blocking(i2c, AHT10_I2C_ADDR, AHT10_CMD_INIT, sizeof(AHT10_CMD_INIT), false);
     if (resultado < 0) return false;
 
-    sleep_ms(25); // tempo de estabilização
+    sleep_ms(25); 
     return true;
 }
 
@@ -17,14 +17,14 @@ bool AHT10_obterMedicao(i2c_inst_t *i2c, AHT10_t *medida) {
     if (i2c_write_blocking(i2c, AHT10_I2C_ADDR, AHT10_CMD_TRIGGER, sizeof(AHT10_CMD_TRIGGER), false) < 0)
         return false;
 
-    sleep_ms(80); // aguarda conversão
+    sleep_ms(80); 
 
-    // Lê resposta
+    
     uint8_t resposta[6];
     if (i2c_read_blocking(i2c, AHT10_I2C_ADDR, resposta, sizeof(resposta), false) < 0)
         return false;
 
-    // Verifica se sensor está pronto e calibrado
+
     if ((resposta[0] & 0x88) != 0x08)
         return false;
 

@@ -29,7 +29,7 @@ static void setup_gpio() {
 int main() {
     stdio_init_all();
 
-    // Configuração do I2C
+
     i2c_init(I2C_PORT, 100 * 1000);
     gpio_set_function(SDA_PIN, GPIO_FUNC_I2C);
     gpio_set_function(SCL_PIN, GPIO_FUNC_I2C);
@@ -38,13 +38,13 @@ int main() {
 
     setup_gpio();
 
-    // Inicializa sensor
+
     if (!AHT10_inicializar(I2C_PORT)) {
         printf("Falha ao inicializar AHT10!\n");
         while (true);
     }
 
-    // Inicializa display OLED
+
     ssd1306_Init();
     ssd1306_Fill(Black);
     ssd1306_UpdateScreen();
@@ -57,7 +57,7 @@ int main() {
         if (AHT10_obterMedicao(I2C_PORT, &leitura)) {
             char buffer[32];
 
-            // === Display ===
+           
             ssd1306_Fill(Black);
             ssd1306_SetCursor(0, 0);
             ssd1306_WriteString("Monitor AHT10", Font_7x10, White);
@@ -77,17 +77,17 @@ int main() {
 
             ssd1306_UpdateScreen();
 
-            // === Debug Serial ===
+           
             printf("Temp: %.2f C | Umid: %.2f %%\n", leitura.temp_celsius, leitura.umidade_relativa);
 
-            // === Lógica de LEDs ===
+            
             gpio_put(LED_AZUL, leitura.temp_celsius < 0.0f);
             gpio_put(LED_VERDE, leitura.temp_celsius >= 20.0f && leitura.temp_celsius <= 30.0f);
 
             bool umidAlta = leitura.umidade_relativa > 70.0f;
             gpio_put(LED_VERMELHO, (!umidAlta && leitura.temp_celsius >= 35.0f));
 
-            // === Buzzer ===
+          
             if (leitura.temp_celsius >= 40.0f) {
                 if (absolute_time_diff_us(proxima_vez_buzzer, get_absolute_time()) <= 0) {
                     gpio_put(BUZZER, 1);
@@ -97,7 +97,7 @@ int main() {
                 }
             }
 
-            // === Umidade alta: piscar vermelho ===
+            
             if (umidAlta) {
                 for (int i = 0; i < 2; i++) {
                     gpio_put(LED_VERMELHO, 1);
